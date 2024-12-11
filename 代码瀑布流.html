@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BgCodeWaterfall</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            background:#000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+<script>
+    const $canvas = document.getElementById('canvas');
+    const ctx = $canvas.getContext('2d');
+
+    //制作全屏
+    $canvas.height = window.innerHeight;
+    $canvas.width = window.innerWidth;
+
+    // 汉字从Unicode字符集
+    let chinese = 'igeekbar~';
+    // 将字符串转换为一个数组中的单个字符
+    chinese = chinese.split('');
+
+    const fontSize = 20;
+    const columns = $canvas.width / fontSize; //雨的列数
+    // 每列的一个数组
+    const drops = [];
+    // 下面是×坐标
+    // 1 = y 在下降（最初是相同的）
+    for(let x = 0; x < columns; x++) {
+        drops[x] = 1;
+    }
+
+    // 画
+    function draw() {
+        // 黑BG的帆布
+        // 半透明BG显示轨迹
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, $canvas.width, $canvas.height);
+        
+        ctx.fillStyle = '#0F0'; //字体颜色
+        ctx.font = fontSize + 'px arial';
+        // 循环字体
+        for(let i = 0; i < drops.length; i++) {
+            // 随机汉字打印
+            const text = chinese[Math.floor(Math.random() * chinese.length)];
+            // x = i*fontSize, y = value of drops[i]*fontSize
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            // 在屏幕上划线后，把它的顶部随机发送到顶部
+            // 将一个随机性添加到复位中，使分散在轴上的下降
+            if(drops[i] * fontSize > $canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            // 增加的Y坐标
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+</script>
+</html>

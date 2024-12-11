@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>实现CSS三栏布局</title>
+    <style>
+        html *{
+            margin:0;
+            padding:0;
+        }
+        article div{
+            min-height: 200px;
+        }
+        .layout{
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+<!-- 4.table布局解决方案 -->
+<section class="layout layout-table">
+    <style>
+        .layout.layout-table .left-center-right{
+            display: table;
+            width:100%;
+            height:200px;
+        }
+        .layout-table .left-center-right>div{
+            display: table-cell;
+        }
+        .layout-table .left{
+            width:300px;
+            background: red;
+        }
+        .layout-table .center{
+            background: yellow;
+        }
+        .layout-table .right{
+            background: blue;
+            width:300px;
+        }
+    </style>
+    <article class="left-center-right">
+        <div class="left"></div>
+        <div class="center">
+            <h1>table布局解决方案</h1>
+            4.这是三栏布局table布局的中间部分
+        </div>
+        <div class="right"></div>
+    </article>
+</section>
+</body>
+</html>

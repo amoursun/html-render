@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>实现CSS三栏布局</title>
+    <style>
+        html *{
+            margin:0;
+            padding:0;
+        }
+        article div{
+            min-height: 200px;
+        }
+        .layout{
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+<!-- 3.flex布局解决方案  section 可用 div-->
+<section class="layout layout-flex">
+    <style>
+        .layout.layout-flex .left-center-right{
+            display: flex;
+        }
+        .layout-flex .left{
+            width:300px;
+            background: red;
+        }
+        .layout-flex .center{
+            background: yellow;
+            flex:1;
+        }
+        .layout-flex .right{
+            width:300px;
+            background: blue;
+        }
+    </style>
+    <article class="left-center-right">
+        <div class="left"></div>
+        <div class="center">
+            <h1>flex解决方案</h1>
+            3.这是三栏布局flex布局的中间部分
+        </div>
+        <div class="right"></div>
+    </article>
+</section>
+</body>
+</html>

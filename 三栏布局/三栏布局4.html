@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>实现CSS三栏布局</title>
+    <style>
+        html *{
+            margin:0;
+            padding:0;
+        }
+        article div{
+            min-height: 200px;
+        }
+        .layout{
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+<!-- 2.绝对定位解决方案 -->
+<section class="layout layout-absolute">
+    <style>
+        .layout.layout-absolute .left-center-right>div{
+            position:absolute;
+        }
+        .layout-absolute .left{
+            background: red;
+            left:0;
+            width:300px;
+        }
+        .layout-absolute .center{
+            background: yellow;
+            left:300px;
+            right:300px;
+        }
+        .layout-absolute .right{
+            background: blue;
+            right:0;
+            width:300px;
+        }
+    </style>
+    <article class="left-center-right">
+        <div class="left"></div>
+        <div class="center">
+            <h1>绝对定位解决方案</h1>
+            2.这是三栏布局绝对定位布局的中间部分
+        </div>
+        <div class="right"></div>
+    </article>
+</section>
+</body>
+</html>

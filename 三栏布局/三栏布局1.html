@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            /*display:table;*/
+            /*width:100%;*/
+            display: flex;
+        }
+
+        .left,
+        .center,
+        .right {
+            /*display:table-cell;*/
+            /*height: 100px;*/
+        }
+        .left{
+            background:red;
+            width:300px;
+
+        }
+        .right{
+            background:yellow;
+            width:300px;
+
+        }
+        .center{
+            flex: 1;
+            background: blue;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="left">left</div>
+        <div class="center">centercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercentercenterv</div>
+        <div class="right">right</div>
+    </div>
+
+</body>
+</html>

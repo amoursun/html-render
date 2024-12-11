@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/languages/javascript.min.js"></script>
+</head>
+<body>
+    <button id="button">选择文件夹</button>
+    <pre><code id="code" class="language-javascript hljs"></code></pre>
+    <script>
+        const btn = document.getElementById('button');
+        const code = document.getElementById('code');
+        btn.onclick = async function () {
+            // 弹出选择文件夹弹框
+            // window.showDirectoryPicker();
+            // 弹出选择文件弹框
+            // window.showOpenFilePicker();
+
+            // window.showSaveFilePicker();
+
+            try {
+                const handle = await window.showDirectoryPicker();
+                // console.log(handle);
+                // FileSystemDirectoryHandle {kind: 'directory', name: 'dev'}
+                // FileSystemFileHandle {kind: 'file', name: 'README.md'}
+                // name: 文件 | 文件夹名字
+                // kind: 类型
+                const root = await processHandle(handle);
+                console.log(root)
+                /**
+                 * console.log(root); // 树形文件架构
+                 * FileSystemDirectoryHandle {children: Array(8), kind: 'directory', name: 'amp'}
+                    children: (8) [FileSystemFileHandle, FileSystemFileHandle, FileSystemDirectoryHandle, FileSystemFileHandle, FileSystemFileHandle, FileSystemFileHandle, FileSystemFileHandle, FileSystemDirectoryHandle]
+                    kind: "directory"
+                    name: "amp"
+                 */
+                // FileSystemFileHandle
+                //     kind: "file"
+                //     name: "additional.d.ts"
+                //     [[Prototype]]: FileSystemFileHandle
+                //          createWritable: ƒ createWritable()
+                //          getFile: ƒ getFile()
+                //          move: ƒ move()
+                //          constructor: ƒ FileSystemFileHandle()
+                //          Symbol(Symbol.toStringTag): "FileSystemFileHandle"
+                //          kind: "file"
+                //          name: "additional.d.ts"
+                // getFile => 获取文件内容
+                const fileHandle = root.children[5];
+                const file = await fileHandle.getFile();
+                /**
+                 * console.log(file):
+                 * File {name: 'README.md', lastModified: 1674786356150, lastModifiedDate: Fri Jan 27 2023 10:25:56 GMT+0800 (中国标准时间), webkitRelativePath: '', size: 1119, …}
+                 */
+                const reader = new FileReader();
+                reader.onload = e => {
+                    /**
+                     * ProgressEvent {isTrusted: true, lengthComputable: true, loaded: 1119, total: 1119, type: 'load', …}
+                     */
+                    // console.log(e.target.result);
+                    code.innerHTML = hljs.highlightAuto(e.target.result).value;
+                };
+                reader.readAsText(file, 'utf-8');
+            } catch (e) {
+
+            }
+        }
+
+        // 获取文件
+        async function processHandle(handle) {
+            if (handle.kind === 'file') {
+                return handle;
+            }
+            handle.children = [];
+            // 得到异步迭代器
+            const iterator = handle.entries();
+            // 需要for await 循环
+            for await (const item of iterator) {
+                /**
+                 * console.log(item):
+                 *  ['README.md', FileSystemFileHandle]
+                    ['additional.d.ts', FileSystemFileHandle]
+                    ['.DS_Store', FileSystemFileHandle]
+                    ['components', FileSystemDirectoryHandle]
+                    ['.gitignore', FileSystemFileHandle]
+                    ['package.json', FileSystemFileHandle] => 文件
+                    ['tsconfig.json', FileSystemFileHandle]
+                    ['pages', FileSystemDirectoryHandle] => 文件夹
+                 */
+                const _hanlde = item[1]; // 文件 | 文件夹
+                // console.log(_hanlde); // FileSystemDirectoryHandle {kind: 'directory', name: 'dev'}
+                handle.children.push(await processHandle(_hanlde))
+            }
+            return handle;
+        }
+    </script>
+</body>
+</html>

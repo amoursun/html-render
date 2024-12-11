@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Textarea自适应高度</title>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;">
+	<link rel="stylesheet" type="text/css" href="">
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+        body {background-color:#fff;}
+        textarea {border:1px solid #aaa;}
+        .box {
+            padding-bottom: 72px;
+        }
+        .foot {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: red;
+            height: 60px;
+        }
+	</style>
+	
+	<script type="text/javascript">
+	/**
+	 * 让文本域根据输入的内容自适应高度
+	 * 使用方式：
+	 * $('your textarea').TextareaAutoHeight(); 
+	 * $('your textarea').TextareaAutoHeight(300);
+	 * 
+	 * @param [maxHeight] 自动增长到的最大高度值，如果不设置，则无限增长
+	 */
+	$.fn.TextareaAutoHeight = function (maxHeight) {
+		var extra = 0;
+		var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+		isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera');
+		
+		return this.each(function () {
+			if (!/[object HTMLTextAreaElement]/gi.test(Object.prototype.toString.call(this))) {
+				return;
+			}
+			
+			var elem = this,
+			$elem = $(this);
+			var _maxHeight = maxHeight || $elem.attr('data-maxheight');
+			var minHeight = $elem.height();
+			
+			this.style.maxHeight = this.style.resize = 'none';
+			
+			var change = function () {
+				var scrollTop,
+				height,
+				padding = 0,
+				style = elem.style;
+				if (elem._length === elem.value.length)
+					return;
+				elem._length = elem.value.length;
+				
+				if (!isFirefox && !isOpera) {
+					padding = parseInt($elem.css('paddingTop')) + parseInt($elem.css('paddingBottom'));
+				};
+                console.log('elem.currHeight', elem.currHeight);
+				
+				scrollTop = Math.max(document.documentElement.scrollTop || document.body.scrollTop);
+				
+				// style.height = minHeight + 'px';
+                style.height = 'auto';
+				
+				if (elem.scrollHeight > minHeight) {
+					if (_maxHeight && elem.scrollHeight > _maxHeight) {
+						height = _maxHeight - padding;
+						style.overflowY = 'auto';
+					} else {
+						height = elem.scrollHeight - padding;
+						style.overflowY = 'hidden';
+					};
+					
+					style.height = height + extra + 'px';
+                    console.log('style', style.height);
+					scrollTop += parseInt(style.height) - elem.currHeight;
+					document.body.scrollTop = scrollTop;
+					document.documentElement.scrollTop = scrollTop;
+					elem.currHeight = parseInt(style.height);
+				};
+			};
+			
+			$elem.bind('propertychange', change).bind('input', change).bind('focus', change);
+			change();
+		});
+	};
+	</script>
+</head>
+
+<body>
+  
+  <h2><span>Textarea自适应高度</span></h2>
+	<p>当文本域内容很多时，文本域将自适应内容的高度，而不出现滚动条。</p>
+	<p>
+		<span class="label-info">API：</span> 
+		<pre>
+	$('your textarea').TextareaAutoHeight(maxHeight);
+
+	@param -- maxHeight 最大允许的高度，默认：无限制；也可以通过指定元素的 <code>data-maxheight="number"</code> 属性定义。
+		</pre>			
+	</p>
+	
+	<div class="box">
+        <div>
+            <textarea rows="4" cols="50">这里输入敲入多个回车试试，我将无限自适应</textarea>
+            <textarea rows="4" cols="50" data-maxheight="150">我最高只能达到150px，超过150px，将出现滚动条</textarea>
+        </div>
+        <div class="foot"></div>
+    </div>
+ 
+ 	<script type="text/javascript">
+ 	$('textarea').TextareaAutoHeight();
+ 	</script>
+</body>
+
+</html>

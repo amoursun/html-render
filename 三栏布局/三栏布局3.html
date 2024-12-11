@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>实现CSS三栏布局</title>
+    <style>
+        html *{
+            margin:0;
+            padding:0;
+        }
+        article div{
+            min-height: 200px;
+        }
+        .layout{
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+<!-- 1.浮动解决方案 -->
+<section class="layout layout-float">
+    <style>
+        .left-right-center .left{
+            float:left;
+            width:300px;
+            background: red;
+        }
+        .left-right-center .right{
+            float:right;
+            width:300px;
+            background: blue;
+        }
+        .left-right-center .center{
+            background: yellow;
+        }
+    </style>
+    <article class="left-right-center">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="center">
+            <h1>浮动解决方案</h1>
+            1.这是三栏布局浮动布局的中间部分
+        </div>
+    </article>
+</section>
+</body>
+</html>

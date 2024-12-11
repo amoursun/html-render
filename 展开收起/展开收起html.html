@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [id^="contTab"] {
+            display: none;
+        }
+
+        .content-more {
+            display: none;
+        }
+
+        [id^="contTab"]:checked ~ #content {
+            max-height: 95px;
+            overflow: hidden;
+        }
+
+        [id^="contTab"]:checked ~ .content-more {
+            display: block;
+            position: relative;
+            text-align: center;
+        }
+
+        [id^="contTab"]:checked ~ .content-more .gradient {
+            background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+            background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), #fff);
+            background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0), #fff);
+            height: 80px;
+            position: absolute;
+            left: 0;
+            top: -79px;
+            width: 100%;
+        }
+
+        [id^="contTab"]:checked ~ .content-more .readmore {
+            display: inline-block;
+            background: #319a1717;
+            color: #0014ff9e;
+            width: 300px;
+            height: 30px;
+            border-radius: 32px;
+            line-height: 32px;
+            font-size: 14px;
+            cursor: pointer;
+            text-indent: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <input type="checkbox" id="contTab" checked="checked" class="tabbed">
+    <div id="cont">
+        所以，这种方法实现的时候需要结合js进行判断。用js处理的话非常简单，我就不写了,毕竟我标题是纯css实现。
+        出来混是要讲信用的，既然我说纯css就一定不写js,我并不是因为想偷懒，是我强烈的信誉感和正直的社会责任感
+        不允许我这么做所以，这种方法实现的时候需要结合js进行判断。用js处理的话非常简单，我就不写了,毕竟我标题
+        是纯css实现。出来混是要讲信用的，既然我说纯css就一定不写js,我并不是因为想偷懒，是我强烈的信誉感和正直
+        的社会责任感不允许我这么做所以，这种方法实现的时候需要结合js进行判断。用js处理的话非常简单，我就不写
+        了,毕竟我标题是纯css实现。出来混是要讲信用的，既然我说纯css就一定不写js,我并不是因为想偷懒，是我强烈
+        的信誉感和正直的社会责任感不允许我这么做所以，这种方法实现的时候需要结合js进行判断。用js处理的话非常简
+        单，我就不写了,毕竟我标题是纯css实现。出来混是要讲信用的，既然我说纯css就一定不写js,我并不是因为想偷
+        懒，是我强烈的信誉感和正直的社会责任感不允许我这么做所以，这种方法实现的时候需要结合js进行判断。用js处
+        理的话非常简单，我就不写了,毕竟我标题是纯css实现。出来混是要讲信用的，既然我说纯css就一定不写js,我并
+        不是因为想偷懒，是我强烈的信誉感和正直的社会责任感不允许我这么做所以，这种方法实现的时候需要结合js进行
+        判断。用js处理的话非常简单，我就不写了,毕竟我标题是纯css实现。出来混是要讲信用的，既然我说纯css就一定
+        不写js,我并不是因为想偷懒，是我强烈的信誉感和正直的社会责任感不允许我这么做所以，这种方法实现的时候需
+        要结合js进行判断。用js处理的话非常简单，我就不写了,毕竟我标题是纯css实现。出来混是要讲信用的，既然我
+        说纯css就一定不写js,我并不是因为想偷懒，是我强烈的信誉感和正直的社会责任感不允许我这么做所以，这种方
+        法实现的时候需要结合js进行判断。用js处理的话非常简单，我就不写了,毕竟我标题是纯css实现。出来混是要讲
+        信用的，既然我说纯css就一定不写js,我并不是因为想偷懒，是我强烈的信誉感和正直的社会责任感不允许我这么
+        做所以，这种方法实现的时候需要结合js进行判断。用js处理的话非常简单，我就不写了,毕竟我标题是纯css实现。
+        出来混是要讲信用的，既然我说纯css就一定不写js,我并不是因为想偷懒，是我强烈的信誉感和正直的社会责任感
+        不允许我这么做所以，这种方法实现的时候需要结合js进行判断。用js处理的话非常简单，我就不写了,毕竟我标题
+        是纯css实现。出来混是要讲信用的，既然我说纯css就一定不写js,我并不是因为想偷懒，是我强烈的信誉感和正直
+        的社会责任感不允许我这么做</div>
+    <div class="content-more"><div class="gradient"></div> <label for="contTab" class="readmore">点击展开全文</label></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #one {
+            box-shadow: 0 10px 0 rgb(0, 0, 0, .9);
+        }
+    </style>
+</head>
+<body>
+<div id="one">
+    one
+    <div id="two">
+        two
+        <div id="three">
+            three
+            <div id="four">
+                four
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    console.log(window);
+    console.log(window.frames);
+    console.log(window.frames.top);
+    console.log(window.frames.top.document);
+    // 先捕获, 再冒泡
+    // 触发元素
+    //    捕获事件在前先捕获, 后冒泡
+    //    捕获事件在后先冒泡, 后捕获
+    var one = document.getElementById('one');
+    var two = document.getElementById('two');
+    var three = document.getElementById('three');
+    var four = document.getElementById('four');
+
+    one.addEventListener('click',function(){
+        console.log('one, bubble');
+    });
+    one.addEventListener('click',function(){
+        console.log('one, capture');
+    },true);
+
+    two.addEventListener('click',function(){
+        console.log('two, bubble');
+    },false);
+    two.addEventListener('click',function(){
+        console.log('two, capture');
+    },true);
+
+    three.addEventListener('click',function(){
+        console.log('three, bubble');
+    });
+    three.addEventListener('click',function(){
+        console.log('three, capture');
+    },true);
+
+    four.addEventListener('click',function(){
+        console.log('four, capture');
+    },true);
+    four.addEventListener('click',function(){
+        console.log('four, bubble');
+    },false);
+
+    // 点击 one
+    // one bubble
+    // one，capture
+
+    // 点击 two
+    // one, capture
+    // two, bubble
+    // two, capture
+    // one, bubble
+
+    // 点击 three
+    // one, capture
+    // two, capture
+    // 先打印冒泡, 再捕获, 冒泡事件在前
+    // 新版本chrome 修改了这里, 遵循先捕获再冒泡, 这里还是先 three, capture 再 three, bubble
+    // three, bubble
+    // three, capture
+    // two, bubble
+    // one, bubble
+
+    // 点击 four
+    // one, capture
+    // two, capture
+    // three, capture
+    // four, capture
+    // four, bubble
+    // three, bubble
+    // two, bubble
+    // one, bubble
+</script>
